@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رياضيات السادس علمي - الصف السادس العلمي</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Chapter Selection Overlay -->
+    <div id="chapterOverlay" class="overlay">
+        <div class="overlay-content">
+            <div class="overlay-header">
+                <h1 class="overlay-title">رياضيات السادس علمي</h1>
+                <p class="overlay-subtitle">اختر الفصل الدراسي</p>
+            </div>
+            <div class="chapters-grid">
+                <div class="chapter-card available" onclick="selectChapter(2)">
+                    <div class="chapter-number">الفصل الثاني</div>
+                    <div class="chapter-name">القطوع المخروطية</div>
+                    <div class="chapter-status">متاح ✓</div>
+                </div>
+                <div class="chapter-card disabled">
+                    <div class="chapter-number">الفصل الأول</div>
+                    <div class="chapter-name">قريباً</div>
+                    <div class="chapter-status">غير متاح</div>
+                </div>
+                <div class="chapter-card disabled">
+                    <div class="chapter-number">الفصل الثالث</div>
+                    <div class="chapter-name">قريباً</div>
+                    <div class="chapter-status">غير متاح</div>
+                </div>
+                <div class="chapter-card disabled">
+                    <div class="chapter-number">الفصل الرابع</div>
+                    <div class="chapter-name">قريباً</div>
+                    <div class="chapter-status">غير متاح</div>
+                </div>
+                <div class="chapter-card disabled">
+                    <div class="chapter-number">الفصل الخامس</div>
+                    <div class="chapter-name">قريباً</div>
+                    <div class="chapter-status">غير متاح</div>
+                </div>
+                <div class="chapter-card disabled">
+                    <div class="chapter-number">الفصل السادس</div>
+                    <div class="chapter-name">قريباً</div>
+                    <div class="chapter-status">غير متاح</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp" style="display: none;">
+        <header class="header">
+            <div class="container">
+                <div class="header-top">
+                    <button class="change-chapter-btn" onclick="changeChapter()">← تغيير الفصل</button>
+                    <h1 class="app-title">رياضيات السادس علمي</h1>
+                </div>
+                <p class="app-subtitle">الفصل الثاني: القطوع المخروطية</p>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="container">
+                <div class="menu-grid">
+                    <div class="menu-card" onclick="showSection('lessons')">
+                        <div class="menu-icon">📚</div>
+                        <h2 class="menu-title">الدروس</h2>
+                        <p class="menu-desc">شرح مفصل مع أمثلة</p>
+                    </div>
+                    
+                    <div class="menu-card" onclick="showSection('exercises')">
+                        <div class="menu-icon">✏️</div>
+                        <h2 class="menu-title">تمارين وحلول</h2>
+                        <p class="menu-desc">أسئلة من الكتاب والوزاريات</p>
+                    </div>
+                    
+                    <div class="menu-card" onclick="showSection('quiz')">
+                        <div class="menu-icon">📝</div>
+                        <h2 class="menu-title">اختبار تفاعلي</h2>
+                        <p class="menu-desc">١٢٠ سؤال متعدد الخيارات</p>
+                    </div>
+                </div>
+
+                <!-- Lessons Section -->
+                <section id="lessons" class="section" style="display: none;">
+                    <div class="section-header">
+                        <button class="back-btn" onclick="showHome()">← العودة للرئيسية</button>
+                        <h2 class="section-title">دروس الفصل الثاني</h2>
+                    </div>
+                    <div class="lessons-list" id="lessonsList"></div>
+                </section>
+
+                <!-- Lesson Detail Section -->
+                <section id="lessonDetail" class="section" style="display: none;">
+                    <div class="section-header">
+                        <button class="back-btn" onclick="showSection('lessons')">← العودة للدروس</button>
+                        <h2 class="section-title" id="lessonDetailTitle"></h2>
+                    </div>
+                    <div class="lesson-content-card">
+                        <div class="lesson-content" id="lessonDetailContent"></div>
+                    </div>
+                </section>
+
+                <!-- Exercises Section -->
+                <section id="exercises" class="section" style="display: none;">
+                    <div class="section-header">
+                        <button class="back-btn" onclick="showHome()">← العودة للرئيسية</button>
+                        <h2 class="section-title">تمارين وحلول الفصل الثاني</h2>
+                    </div>
+                    <p class="section-subtitle">من الكتاب وأمثلة الصف + أسئلة وزارية سابقة</p>
+                    <div class="filter-chips" id="exerciseFilters"></div>
+                    <p class="exercise-count" id="exerciseCount"></p>
+                    <div class="exercises-list" id="exercisesList"></div>
+                </section>
+
+                <!-- Solution Section -->
+                <section id="solution" class="section" style="display: none;">
+                    <div class="section-header">
+                        <button class="back-btn" onclick="showSection('exercises')">← العودة للتمارين</button>
+                        <h2 class="section-title">الحل</h2>
+                    </div>
+                    <div class="solution-cards">
+                        <div class="solution-card">
+                            <h3 class="solution-card-title question-title">السؤال</h3>
+                            <p class="solution-text" id="solutionQuestion"></p>
+                        </div>
+                        <div class="solution-card">
+                            <h3 class="solution-card-title answer-title">الجواب</h3>
+                            <p class="solution-text answer-text" id="solutionAnswer"></p>
+                        </div>
+                        <div class="solution-card">
+                            <h3 class="solution-card-title detail-title">الحل المفصل</h3>
+                            <pre class="solution-text detail-text" id="solutionDetail"></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quiz Section -->
+                <section id="quiz" class="section" style="display: none;">
+                    <div class="section-header">
+                        <button class="back-btn" onclick="showHome()">← العودة للرئيسية</button>
+                        <h2 class="section-title">اختبار تفاعلي - الفصل الثاني</h2>
+                    </div>
+                    
+                    <div id="quizStart" class="quiz-start">
+                        <div class="quiz-info-card">
+                            <h3>معلومات الاختبار</h3>
+                            <ul>
+                                <li>بنك الأسئلة: ١٢٠ سؤال مع تفسير لكل إجابة</li>
+                                <li>نوع الأسئلة: متعدد الخيارات</li>
+                                <li>يشمل: القطع المكافئ، القطع الناقص، القطع الزائد، الدائرة</li>
+                                <li>أسئلة من الكتاب والوزاريات وإثرائيات</li>
+                                <li>الخيارات تُخلط في كل محاولة</li>
+                            </ul>
+                            <div class="quiz-mode-buttons">
+                                <button class="start-quiz-btn" onclick="startQuiz('quick')">اختبار سريع · ٢٠ سؤال</button>
+                                <button class="start-quiz-btn ghost" onclick="startQuiz('full')">الاختبار الكامل · ١٢٠ سؤال</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="quizContainer" style="display: none;">
+                        <div class="progress-track">
+                            <div class="progress-fill" id="quizProgressBar"></div>
+                        </div>
+                        <div class="quiz-progress">
+                            <span id="questionCounter"></span>
+                            <span id="questionTopic"></span>
+                        </div>
+                        
+                        <div class="quiz-question-card">
+                            <h3 class="quiz-question-text" id="quizQuestionText"></h3>
+                        </div>
+                        
+                        <div class="quiz-options" id="quizOptions"></div>
+                        
+                        <div id="quizExplanation" class="quiz-explanation" style="display: none;">
+                            <h4>التفسير:</h4>
+                            <p id="quizExplanationText"></p>
+                        </div>
+                        
+                        <div class="quiz-actions">
+                            <button id="checkAnswerBtn" class="quiz-btn check-btn" onclick="checkAnswer()" disabled>تحقق من الإجابة</button>
+                            <button id="nextQuestionBtn" class="quiz-btn next-btn" onclick="nextQuestion()" style="display: none;">السؤال التالي</button>
+                        </div>
+                    </div>
+
+                    <div id="quizResult" style="display: none;">
+                        <div class="result-card">
+                            <h2>انتهى الاختبار</h2>
+                            <div class="score-display">
+                                <span id="finalScore"></span> / <span id="totalQuestions"></span>
+                            </div>
+                            <p class="score-label">الدرجة</p>
+                            <p class="result-message" id="resultMessage"></p>
+                            <div class="result-actions">
+                                <button class="result-btn" onclick="restartQuiz()">إعادة الاختبار</button>
+                                <button class="result-btn secondary" onclick="showHome()">العودة للرئيسية</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <p id="footerSecret">made with <span class="love">love</span></p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Easter Egg -->
+    <div id="easterEgg" class="egg-overlay" style="display: none;">
+        <div class="egg-modal">
+            <button class="egg-close" onclick="closeEasterEgg()">✕</button>
+            <h2 class="egg-title">🤫 أسرار الصف</h2>
+            <p class="egg-subtitle">شخصيات لا تُنسى من الفصل الثاني — اضغط على أي بطاقة تفتح سرّها 🤫</p>
+            <div class="egg-grid" id="eggGrid"></div>
+            <p class="egg-footer">أي اعتراض؟ روح اشكِ لأبو تراب 😎</p>
+        </div>
+    </div>
+
+    <!-- Easter Egg 2: الأستاذ -->
+    <div id="teacherEgg" class="egg-overlay" style="display: none;">
+        <div class="egg-modal teacher-modal">
+            <button class="egg-close" onclick="closeTeacherEgg()">✕</button>
+            <div class="teacher-hero">
+                <img class="teacher-avatar" src="teacher.jpg" alt="الأستاذ يوسف الجبوري">
+                <h2 class="teacher-name">الأستاذ يوسف الجبوري</h2>
+                <p class="teacher-role">مدرّس الرياضيات</p>
+            </div>
+            <div class="teacher-contact">
+                <h3 class="teacher-contact-title">📲 حساباته</h3>
+                <div class="teacher-contact-grid" id="teacherContact"></div>
+            </div>
+            <p class="egg-footer">المصدر: أبو تراب 👑</p>
+        </div>
+    </div>
+
+    <!-- Easter Egg 3: صاحب الموقع -->
+    <div id="devEgg" class="egg-overlay" style="display: none;">
+        <div class="egg-modal dev-modal">
+            <button class="egg-close" onclick="closeDevEgg()">✕</button>
+            <div class="dev-hero">
+                <div class="dev-avatar">💻</div>
+                <h2 class="dev-name">حسين علي</h2>
+                <p class="dev-role">صاحب الموقع</p>
+            </div>
+            <div class="dev-letter">
+                <p class="dev-letter-to">إلى الأستاذ يوسف الجبوري 🎓</p>
+                <p class="dev-letter-body">أستاذ يوسف… هذا الموقع كله مسويه بيدي، من أول درس لآخر سؤال.
+أحتاج درجات — مو بس حتى أنجح، حتى تبقى عندي طاقة أسوي أشياء أكثر وأحلى مثل هذا. 🙏</p>
+                <p class="dev-letter-sign">— حسين علي</p>
+            </div>
+            <p class="dev-note">😤 ملاحظة: أمير خلاني أسوي تصاميم على الإنستا… وما دفعلي فلوس.</p>
+            <a class="dev-send" id="devSend" href="https://wa.me/9647703478943" target="_blank" rel="noopener noreferrer">📩 وصّل الرسالة للأستاذ</a>
+            <p class="egg-footer">اكتب «حسين» أو «grades» لتفتحها مرة ثانية</p>
+        </div>
+    </div>
+
+    <!-- Easter Egg 4: سر كل شخص -->
+    <div id="personEgg" class="egg-overlay" style="display: none;">
+        <div class="egg-modal dev-modal person-modal">
+            <button class="egg-close" onclick="closePersonEgg()">✕</button>
+            <div class="dev-hero">
+                <div class="dev-avatar" id="personAvatar">🙂</div>
+                <h2 class="dev-name" id="personName"></h2>
+                <p class="dev-role" id="personRole"></p>
+            </div>
+            <div class="dev-letter">
+                <p class="dev-letter-to">إلى الأستاذ يوسف الجبوري 🎓</p>
+                <p class="dev-letter-body" id="personLetter"></p>
+                <p class="dev-letter-sign" id="personSign"></p>
+            </div>
+            <p class="dev-note" id="personNote"></p>
+            <a class="dev-send" id="personSend" href="https://wa.me/9647703478943" target="_blank" rel="noopener noreferrer">📩 وصّل رسالته للأستاذ</a>
+            <p class="egg-footer" id="personHint">سرّ من أسرار الصف 🤫</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
